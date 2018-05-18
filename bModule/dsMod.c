@@ -11,28 +11,29 @@ struct date{
 	struct list_head list; 
 };
 
-int dsMod_init(void){
 	static LIST_HEAD(head);
-	printk(KERN_INFO "Module loaded");
+
+int dsMod_init(void){
 	struct date* first;
+	struct date* second;
+	struct date* third;
+	struct date* ptr;
+	printk(KERN_INFO "Module loaded");
 	first = kmalloc(sizeof(&first),GFP_KERNEL);
 	first->day =  2;
 	first->month = 3;
 	INIT_LIST_HEAD(&first->list);
 	list_add_tail(&first->list, &head);
-	struct date* second;
 	second = kmalloc(sizeof(&second),GFP_KERNEL);
 	second->day =  4;
 	second->month = 5;
 	INIT_LIST_HEAD(&second->list);
 	list_add_tail(&second->list, &first->list);
-	struct date* third;
 	third = kmalloc(sizeof(&third),GFP_KERNEL);
 	third->day =  6;
 	third->month = 7;
 	INIT_LIST_HEAD(&third->list);
 	list_add_tail(&third->list, &second->list);
-	struct date* ptr;
 	list_for_each_entry(ptr,&head,list){
 		printk(KERN_INFO "%d",ptr->day);
 		printk(KERN_INFO "%d",ptr->month);
@@ -42,7 +43,12 @@ int dsMod_init(void){
 }
 
 void dsMod_exit(void){
+	struct date *ptr,*next;
 	printk(KERN_INFO "Unloaded the module\n");
+	list_for_each_entry_safe(ptr,next,&head,list){
+		list_del(&ptr->list);
+		kfree(ptr);
+	}
 }
 
 module_init(dsMod_init);

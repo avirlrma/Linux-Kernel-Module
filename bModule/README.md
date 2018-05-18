@@ -6,5 +6,4 @@
 + not sure of the order of the output in `dmesg`
 
 ## To-do
-+ free up the space in exit point of the module
 + macro for inserting the elements
