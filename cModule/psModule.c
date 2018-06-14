@@ -11,9 +11,9 @@ for Informational message*/
 
 int ps_init(void){
 	printk(KERN_INFO "Module loaded\n");
-	struct task_struct *task;
-	for_each_node(task){	
-		printk(KERN_INFO "%s ",task_pid_nr(task));
+	struct task_struct *p;
+	for_each_process(p){	
+		    printk("Task %s (pid = %d)\n",p->comm, task_pid_nr(p));
 	}
 	return 0;
 }
