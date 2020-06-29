@@ -20,5 +20,6 @@ module_exit(simple_exit);
 
 //Module_info
 
+MODULE_DATE("SOME DATE")
 MODULE_AUTHOR("Aviral Verma");
 MODULE_DESCRIPTION("simple test module");
